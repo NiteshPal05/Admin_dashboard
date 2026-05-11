@@ -104,6 +104,8 @@ VITE_API_URL=https://your-render-service.onrender.com/api
 
 After changing `VITE_API_URL` in Netlify, redeploy the frontend. After changing `CLIENT_URL` or admin credentials in Render, restart or redeploy the backend.
 
+`CLIENT_URL` should be your Netlify site origin. A trailing slash is tolerated by the backend, but leaving it off is cleaner.
+
 For login, use the same `ADMIN_EMAIL` and `ADMIN_PASSWORD` values configured on Render. The backend updates the admin account from those environment variables each time it starts.
 
 Quick production checks:

@@ -10,14 +10,18 @@ import { seedDatabase } from './data/seed.js';
 const app = express();
 const port = process.env.PORT || 5001;
 
+function normalizeOrigin(origin) {
+  return origin?.trim().replace(/\/+$/, '');
+}
+
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
   .split(',')
-  .map((origin) => origin.trim())
+  .map(normalizeOrigin)
   .filter(Boolean);
 
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(normalizeOrigin(origin))) {
       callback(null, true);
       return;
     }
