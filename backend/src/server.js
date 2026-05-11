@@ -32,7 +32,7 @@ app.use(cors({
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'digital-mongers-api' });
+  res.json({ status: 'ok', service: 'admin-dashboard-api' });
 });
 
 app.use('/api/auth', authRoutes);
