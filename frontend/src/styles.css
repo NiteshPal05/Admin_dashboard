@@ -51,6 +51,35 @@ button { cursor: pointer; }
 .login-card label { display: block; margin: 4px 0 8px; color: #aeb9e1; font-size: 13px; }
 .login-card input { margin-bottom: 18px; }
 .login-card .primary-btn { width: fit-content; min-width: 118px; margin-top: 2px; }
+.password-field {
+  position: relative;
+  margin-bottom: 18px;
+}
+.password-field input {
+  margin-bottom: 0;
+  padding-right: 46px;
+}
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #aeb9e1;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  transform: translateY(-50%);
+}
+.password-toggle:hover,
+.password-toggle:focus-visible {
+  color: #ffffff;
+  background: rgba(203, 60, 255, .14);
+  outline: none;
+}
 input, select {
   width: 100%;
   min-height: 42px;
@@ -93,6 +122,7 @@ input:focus, select:focus { border-color: #cb3cff; box-shadow: 0 0 0 3px rgba(20
 .sidebar button.active { background: #0b1739; color: #fff; border: 1px solid #343b4f; }
 
 .workspace { width: 100%; max-width: 1420px; margin: 0 auto; padding: 18px 24px 40px; }
+.mobile-nav { display: none; }
 .header, .hero-row, .section-heading, .panel-header, .panel-title, .pagination {
   display: flex;
   align-items: center;
@@ -331,6 +361,33 @@ td:first-child:not([colspan]) { display: flex; align-items: center; gap: 7px; }
 
 @media (max-width: 1100px) {
   .sidebar { display: none; }
+  .mobile-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 6px;
+    background: #08142f;
+    border: 1px solid #172347;
+    border-radius: 8px;
+  }
+  .mobile-nav button {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: #aeb9e1;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 0 8px;
+  }
+  .mobile-nav button.active {
+    color: #ffffff;
+    background: #0b1739;
+    border-color: #343b4f;
+  }
   .summary-grid, .reports-grid, .analytics-grid, .country-panel { grid-template-columns: 1fr 1fr; }
   .analytics-grid { gap: 18px; }
   .revenue-panel, .side-stack .panel, .side-stack .panel:first-child, .side-stack .panel:last-child { border-radius: 12px; }
@@ -342,6 +399,7 @@ td:first-child:not([colspan]) { display: flex; align-items: center; gap: 7px; }
   .workspace { padding: 16px; }
   .login-card { padding: 26px; }
   .login-card h1 { font-size: 26px; }
+  .mobile-nav button { font-size: 12px; }
   .header, .hero-row, .section-heading { align-items: flex-start; flex-direction: column; }
   .summary-grid, .reports-grid, .analytics-grid, .country-panel { grid-template-columns: 1fr; }
   .metric-value { font-size: 24px; }

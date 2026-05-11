@@ -6,6 +6,7 @@ import {
   Check,
   Download,
   Eye,
+  EyeOff,
   LayoutDashboard,
   LogOut,
   MoreHorizontal,
@@ -21,6 +22,11 @@ import { api, setAuthToken } from './services/api.js';
 import './styles.css';
 
 const initialForm = { name: '', email: '', role: 'Viewer', status: 'Active' };
+const navigationItems = [
+  { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
+  { id: 'users', label: 'Users', icon: Users },
+  { id: 'reports', label: 'Reports', icon: Shield }
+];
 
 function getTrailingMonthLabels(count = 12) {
   const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' });
@@ -48,6 +54,7 @@ function Login({ onLogin }) {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function submit(event) {
     event.preventDefault();
@@ -81,7 +88,22 @@ function Login({ onLogin }) {
         <label>Email</label>
         <input value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
         <label>Password</label>
-        <input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
+        <div className="password-field">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            value={form.password}
+            onChange={(event) => setForm({ ...form, password: event.target.value })}
+          />
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={() => setShowPassword((visible) => !visible)}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            title={showPassword ? 'Hide password' : 'Show password'}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
         {error && <span className="form-error">{error}</span>}
         <button className="primary-btn" disabled={loading}>{loading ? 'Signing in...' : 'Login'}</button>
       </form>
@@ -251,6 +273,7 @@ function Dashboard({ user, logout }) {
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
       <section className="workspace">
         <Header user={user} logout={logout} />
+        <MobileNav activePage={activePage} setActivePage={setActivePage} />
         {error && <div className="notice error">{error}</div>}
         <div className="hero-row">
           <div>
@@ -291,23 +314,30 @@ function Dashboard({ user, logout }) {
 }
 
 function Sidebar({ activePage, setActivePage }) {
-  const items = [
-    { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-    { id: 'users', label: 'Users', icon: Users },
-    { id: 'reports', label: 'Reports', icon: Shield }
-  ];
-
   return (
     <aside className="sidebar">
       <div className="logo"><LayoutDashboard size={22} /> Admin Dashboard</div>
       <nav>
-        {items.map(({ id, label, icon: Icon }) => (
+        {navigationItems.map(({ id, label, icon: Icon }) => (
           <button key={id} className={activePage === id ? 'active' : ''} onClick={() => setActivePage(id)}>
             <Icon size={18} /> {label}
           </button>
         ))}
       </nav>
     </aside>
+  );
+}
+
+function MobileNav({ activePage, setActivePage }) {
+  return (
+    <nav className="mobile-nav" aria-label="Dashboard sections">
+      {navigationItems.map(({ id, label, icon: Icon }) => (
+        <button key={id} className={activePage === id ? 'active' : ''} onClick={() => setActivePage(id)}>
+          <Icon size={16} />
+          <span>{label}</span>
+        </button>
+      ))}
+    </nav>
   );
 }
 
