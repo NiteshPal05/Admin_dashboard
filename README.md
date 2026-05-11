@@ -119,6 +119,8 @@ After changing environment variables, redeploy the related service.
 
 ## Health Check
 
+Replace `your-render-service` with your actual Render service name:
+
 ```text
 https://your-render-service.onrender.com/api/health
 ```
@@ -128,6 +130,6 @@ Expected response:
 ```json
 {
   "status": "ok",
-  "service": "digital-mongers-api"
+  "service": "admin-dashboard-api"
 }
 ```
