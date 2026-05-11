@@ -60,7 +60,13 @@ function Login({ onLogin }) {
       setAuthToken(data.token);
       onLogin(data.user);
     } catch (err) {
-      setError(err.response?.data?.message || 'Unable to login');
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else if (err.request) {
+        setError('Unable to reach the backend API. Check VITE_API_URL on Netlify and CLIENT_URL on Render.');
+      } else {
+        setError('Unable to login');
+      }
     } finally {
       setLoading(false);
     }
