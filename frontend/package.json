@@ -2,7 +2,7 @@
   "name": "admin-dashboard-frontend",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
+  "scripts": { "build": "vite build" }
     "dev": "node dev-server.mjs",
     "build": "node dev-server.mjs build",
     "preview": "node dev-server.mjs preview"
