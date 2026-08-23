@@ -51,6 +51,20 @@ button { cursor: pointer; }
 .login-card label { display: block; margin: 4px 0 8px; color: #aeb9e1; font-size: 13px; }
 .login-card input { margin-bottom: 18px; }
 .login-card .primary-btn { width: fit-content; min-width: 118px; margin-top: 2px; }
+.auth-switch {
+  margin-top: 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #9cc4ff;
+  text-align: left;
+  font-size: 13px;
+}
+.auth-switch:hover,
+.auth-switch:focus-visible {
+  color: #ffffff;
+  outline: none;
+}
 .password-field {
   position: relative;
   margin-bottom: 18px;

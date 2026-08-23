@@ -1,0 +1,123 @@
+{
+  "admin": {
+    "id": "admin-local",
+    "name": "Admin",
+    "email": "admin@gmail.com",
+    "password": "Admin@123",
+    "role": "Admin"
+  },
+  "dashboard": {
+    "id": "dashboard-main",
+    "key": "main",
+    "summary": [
+      {
+        "label": "Pageviews",
+        "value": "0",
+        "change": "0%",
+        "tone": "positive"
+      },
+      {
+        "label": "Monthly users",
+        "value": "0",
+        "change": "0%",
+        "tone": "positive"
+      },
+      {
+        "label": "New sign ups",
+        "value": "0",
+        "change": "0%",
+        "tone": "positive"
+      },
+      {
+        "label": "Subscriptions",
+        "value": "0",
+        "change": "0%",
+        "tone": "positive"
+      }
+    ],
+    "revenue": {
+      "total": "$0",
+      "growth": "0%",
+      "labels": [
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "revenue": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expenses": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "profit": {
+      "total": "$0",
+      "growth": "0%",
+      "bars": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "sessions": {
+      "total": "0",
+      "growth": "0%",
+      "points": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "deviceUsers": [],
+    "orders": [],
+    "countries": []
+  },
+  "users": [],
+  "meta": {
+    "nextUserId": 6
+  }
+}

@@ -1,6 +1,6 @@
 # Admin Dashboard
 
-A full-stack admin dashboard with a React frontend, Express backend, JWT authentication, dashboard analytics, and user management.
+A full-stack admin dashboard with a React frontend, a lightweight Node.js API, JWT authentication, dashboard analytics, and user management.
 
 ## Live Demo
 
@@ -16,9 +16,9 @@ A full-stack admin dashboard with a React frontend, Express backend, JWT authent
 
 ## Tech Stack
 
-- React + Vite
-- Node.js + Express
-- MongoDB + Mongoose
+- React
+- Node.js + native HTTP server
+- MongoDB Atlas
 - JWT authentication
 - Axios
 - Lucide React icons
@@ -27,50 +27,52 @@ A full-stack admin dashboard with a React frontend, Express backend, JWT authent
 
 ```text
 frontend/   React dashboard UI
-backend/    Express REST API
+backend/    Node API
 ```
 
 ## Run Locally
 
-Start the backend:
+Install dependencies once from the project root:
+
+```bash
+npm install
+```
+
+Then run each app from its own folder:
+
+- Frontend:
 
 ```bash
 cd backend
-npm install
 npm run dev
 ```
 
-Start the frontend:
+- Backend:
 
 ```bash
-cd frontend
-npm install
-npm run dev
+cd backend
+npm start
 ```
 
-Frontend runs at:
+That starts:
 
-```text
-http://localhost:5173
-```
+- Backend API on `http://localhost:5001`
+- Frontend on `http://localhost:5173`
 
-Backend runs at:
-
-```text
-http://localhost:5001
-```
+The backend tries MongoDB Atlas first. If Atlas is unavailable on your machine, it falls back to the local datastore so localhost still works.
 
 ## Environment Variables
 
-Use example values only. Replace them with your own values in Netlify, Render, or local `.env` files.
+Use example values only. Replace them with your own values in Netlify, Render, Atlas, or local `.env` files.
+The backend is Atlas-first, with a local fallback for localhost development.
 
 Backend `.env` example:
 
 ```env
 PORT=5001
-CLIENT_URL=https://your-netlify-site.netlify.app
-MONGODB_URI=mongodb+srv://username:password@cluster.example.mongodb.net/database_name
-MONGODB_DB=database_name
+CLIENT_URL=http://localhost:5173,http://127.0.0.1:5173
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.example.mongodb.net/?appName=Cluster0
+MONGODB_DB=data_dashboard
 JWT_SECRET=your_long_random_jwt_secret
 JWT_EXPIRES_IN=1d
 ADMIN_NAME=Admin
@@ -78,13 +80,12 @@ ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=your_admin_password
 ADMIN_ROLE=Admin
 SEED_DEMO_DATA=false
-CLEAR_DEMO_DATA=true
 ```
 
 Frontend `.env` example:
 
 ```env
-VITE_API_URL=https://your-render-service.onrender.com/api
+VITE_API_URL=http://127.0.0.1:5001/api
 ```
 
 ## Production Setup
@@ -94,14 +95,14 @@ In Render:
 - Set the backend root directory to `backend`
 - Set the start command to `npm start`
 - Add the backend environment variables
-- Use MongoDB Atlas for `MONGODB_URI`
+- Point `MONGODB_URI` to your Atlas cluster
 
 In Netlify:
 
 - Set the frontend root directory to `frontend`
 - Set the build command to `npm run build`
 - Set the publish directory to `dist`
-- Add `VITE_API_URL` with your Render API URL
+- Add `VITE_API_URL` with your backend API URL
 
 After changing environment variables, redeploy the related service.
 
@@ -119,10 +120,10 @@ After changing environment variables, redeploy the related service.
 
 ## Health Check
 
-Replace `your-render-service` with your actual Render service name:
+Replace `your-backend-service` with your actual backend host:
 
 ```text
-https://your-render-service.onrender.com/api/health
+https://your-backend-service.example.com/api/health
 ```
 
 Expected response:

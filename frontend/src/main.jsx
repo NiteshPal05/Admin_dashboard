@@ -50,8 +50,9 @@ function getCurrentMonthLabel() {
   return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(new Date());
 }
 
-function Login({ onLogin }) {
-  const [form, setForm] = useState({ email: '', password: '' });
+function AuthCard({ mode, setMode, onLogin }) {
+  const isRegister = mode === 'register';
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -61,11 +62,15 @@ function Login({ onLogin }) {
     setLoading(true);
     setError('');
     try {
-      const { data } = await api.post('/auth/login', form);
+      const payload = isRegister
+        ? { name: form.name, email: form.email, password: form.password }
+        : { email: form.email, password: form.password };
+      const { data } = await api.post(isRegister ? '/auth/register' : '/auth/login', payload);
       localStorage.setItem('dm_token', data.token);
       localStorage.setItem('dm_user', JSON.stringify(data.user));
       setAuthToken(data.token);
       onLogin(data.user);
+      setMode('login');
     } catch (err) {
       if (err.response?.data?.message) {
         setError(err.response.data.message);
@@ -83,8 +88,14 @@ function Login({ onLogin }) {
     <main className="login-shell">
       <form className="login-card" onSubmit={submit}>
         <div className="brand-mark"><LayoutDashboard size={26} /></div>
-        <h1>Admin Dashboard</h1>
-        <p>Sign in to continue to your analytics workspace.</p>
+        <h1>{isRegister ? 'Create admin account' : 'Admin Dashboard'}</h1>
+        <p>{isRegister ? 'Register a new admin with name, email, and password.' : 'Sign in to continue to your analytics workspace.'}</p>
+        {isRegister && (
+          <>
+            <label>Name</label>
+            <input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
+          </>
+        )}
         <label>Email</label>
         <input value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
         <label>Password</label>
@@ -105,7 +116,17 @@ function Login({ onLogin }) {
           </button>
         </div>
         {error && <span className="form-error">{error}</span>}
-        <button className="primary-btn" disabled={loading}>{loading ? 'Signing in...' : 'Login'}</button>
+        <button className="primary-btn" disabled={loading}>{loading ? (isRegister ? 'Creating account...' : 'Signing in...') : (isRegister ? 'Create admin' : 'Login')}</button>
+        <button
+          type="button"
+          className="auth-switch"
+          onClick={() => {
+            setError('');
+            setMode(isRegister ? 'login' : 'register');
+          }}
+        >
+          {isRegister ? 'Already have an admin account? Sign in' : 'Need another admin? Register here'}
+        </button>
       </form>
     </main>
   );
@@ -113,6 +134,7 @@ function Login({ onLogin }) {
 
 function App() {
   const savedToken = localStorage.getItem('dm_token');
+  const [mode, setMode] = useState('login');
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('dm_user');
     return saved ? JSON.parse(saved) : null;
@@ -127,7 +149,7 @@ function App() {
     setUser(null);
   }
 
-  return user && savedToken ? <Dashboard user={user} logout={logout} /> : <Login onLogin={setUser} />;
+  return user && savedToken ? <Dashboard user={user} logout={logout} /> : <AuthCard mode={mode} setMode={setMode} onLogin={setUser} />;
 }
 
 function Dashboard({ user, logout }) {
