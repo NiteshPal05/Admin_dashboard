@@ -153,8 +153,14 @@ async function handleRequest(req, res) {
   const { pathname, searchParams } = url;
 
   try {
-    if (req.method === 'GET' && pathname === '/api/health') {
-      sendJson(res, 200, { status: 'ok', service: 'admin-dashboard-api' });
+    if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/health') {
+      if (req.method === 'HEAD') {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.end();
+      } else {
+        sendJson(res, 200, { status: 'ok', service: 'admin-dashboard-api' });
+      }
       return;
     }
 
